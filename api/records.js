@@ -1,6 +1,6 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 
-const uri = "YOUR_MONGODB_ATLAS_URI";
+const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 
 module.exports = async (req, res) => {
@@ -16,6 +16,18 @@ module.exports = async (req, res) => {
       const data = req.body;
       const result = await collection.insertOne(data);
       res.status(201).json(result);
+    } else if (req.method === "PUT") {
+      const id = req.query.id;
+      const data = req.body;
+      const result = await collection.updateOne(
+        { _id: new ObjectId(id) },
+        { $set: data }
+      );
+      res.status(200).json(result);
+    } else if (req.method === "DELETE") {
+      const id = req.query.id;
+      const result = await collection.deleteOne({ _id: new ObjectId(id) });
+      res.status(200).json(result);
     } else {
       res.status(405).send("Method Not Allowed");
     }
