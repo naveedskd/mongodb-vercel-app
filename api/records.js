@@ -6,8 +6,8 @@ const client = new MongoClient(uri);
 module.exports = async (req, res) => {
   try {
     await client.connect();
-    const db = client.db("exceldata");
-    const collection = db.collection("records");
+    const db = client.db("exceldb");
+    const collection = db.collection("exceldta");
 
     if (req.method === "GET") {
       const records = await collection.find().toArray();
