@@ -1,12 +1,12 @@
 const { MongoClient, ObjectId } = require('mongodb');
 
-const uri = process.env.MONGODB_URI;
+const uri = "mongodb+srv://naveedsk:Nad12345$$@exceldata.vftbtpd.mongodb.net/?retryWrites=true&w=majority&appName=ExcelData";
 const client = new MongoClient(uri);
 
 module.exports = async (req, res) => {
   try {
     await client.connect();
-    const db = client.db("mydb");
+    const db = client.db("exceldata");
     const collection = db.collection("records");
 
     if (req.method === "GET") {
